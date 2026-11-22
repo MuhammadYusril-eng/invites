@@ -261,7 +261,7 @@ function kirim(){
   var d={nama:n.value.trim(),hadir:$('hadir').value,jml:$('jml').value,pesan:$('pesan').value.trim()};
   if(API.indexOf('http')!==0){wa(d);return}
   $('kirim').disabled=true;
-  fetch(API,{method:'POST',mode:'no-cors',body:JSON.stringify(d)}).then(function(){if(d.pesan)bubble(d.nama,d.pesan,0);$('ok').hidden=false;$('pesan').value='';$('kirim').disabled=false;setTimeout(ucapan,1500)})
+  fetch(API,{method:'POST',mode:'no-cors',body:JSON.stringify(d)}).then(function(){if(d.pesan)bubble(d.nama,d.pesan,0);$('ok').hidden=false;$('pesan').value='';$('kirim').disabled=false;setTimeout(ucapan,1000)})
   .catch(function(){$('kirim').disabled=false;wa(d)});
 }
 var WL=[],WP=0;
@@ -275,7 +275,7 @@ function wish(){
   $('pg').hidden=WL.length<=per;$('pgn').textContent=(WP+1)+' / '+max;
   $('chat0').hidden=WL.length>0;
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)$('semua').hidden=false;
-  else if(WL.length&&!WT){setTimeout(nextBubble,600);WT=setInterval(nextBubble,3600)}
+  else if(WL.length&&!WT){setTimeout(nextBubble,300);WT=setInterval(nextBubble,3200)}
 }
 var WT=0,WI=0,chatOn=false;
 function nextBubble(){if(!chatOn||document.hidden||!WL.length)return;var x=WL[WI%WL.length];WI++;bubble(x.nama,x.ucapan,WI%2)}
@@ -285,7 +285,7 @@ function bubble(n,t,r){
   b.addEventListener('animationend',function(){b.remove()});$('chat').appendChild(b)}
 function toggleSemua(b){var s=$('semua');s.hidden=!s.hidden;b.textContent=s.hidden?'Lihat semua ucapan':'Sembunyikan daftar'}
 new IntersectionObserver(function(e){chatOn=e[0].isIntersecting}).observe($('chat'));
-function salin(no,b){var t=b.textContent;function ok(){b.textContent='Tersalin';setTimeout(function(){b.textContent=t},2000)}
+function salin(no,b){var t=b.textContent;function ok(){b.textContent='Tersalin';setTimeout(function(){b.textContent=t},1000)}
   try{navigator.clipboard.writeText(no).then(ok,function(){b.textContent=no})}catch(e){b.textContent=no}}
 function route(){
   var h=location.hash.slice(1),k=$('kelola');
